@@ -1,0 +1,17 @@
+<p>Valor de url: {{ id() }}</p>
+
+@for(element of filterRecipesList(); track element.id){
+    <div class="recipe-card">
+        <h3>{{ element.name }}</h3>
+        <p><strong>ID:</strong> {{ element.id }}</p>
+        <p><strong>Difficulty:</strong> {{ element.difficulty }}</p>
+        <p><strong>Cuisine:</strong> {{ element.cuisine }}</p>
+        @if (element.image) {
+            <img [src]="element.image" [alt]="element.name" width="200" />
+        }
+    </div>
+    
+} @empty {
+    <p>No se encontraron datos</p>
+
+}

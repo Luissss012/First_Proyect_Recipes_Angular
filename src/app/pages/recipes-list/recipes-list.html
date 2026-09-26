@@ -1,0 +1,65 @@
+<section>
+    <h3>Selección de Filtros -Local</h3>
+    <label>Por nombre 
+    <input type="radio" value="NAME" [(ngModel)]="filterType">
+</label> 
+
+<label> Por nivel de dificultad
+    <input type="radio" value="DIFFICULTY" [(ngModel)]="filterType">
+</label>
+<p>Filtro seleccionado: {{ filterType }}</p>
+
+@if (filterType === "NAME") {
+<label>
+    Nombre a buscar 
+    <input type="text" placeholder="Ingrese el nombre de la receta" [(ngModel)]="_name">
+</label>
+<p>Valor actual del input de búsqueda de nombre es: {{ _name }}</p>
+
+}
+
+@if (filterType === "DIFFICULTY") {
+<label>
+    Opciones de dificultad
+    <select [(ngModel)]="_difficulty">
+        <option value="">Seleccione una opcion</option>
+        <option value="easy">Easy</option>
+        <option value="medium">Medium</option>
+    </select>
+</label>
+}
+
+<p>Valor actual del input de búsqueda de dificultad es: {{ _difficulty }}</p>
+
+<!--DEJAR UN SOLO BOTON PARA EJECUTAR EL FILTRADO -->
+<button (click)="filterRecipes()">Filtrar</button>
+</section>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>NAME</th>
+        <th>DIFFICULTY</th>
+        <th>ACTIONS</th>
+    </tr>
+    
+    @for (i of _recipesListFilter; track i.id) {
+    <tr>
+        <td>{{ i.id }}</td>
+        <td>{{ i.name }}</td>
+        <td>{{ i.difficulty }}</td> 
+        <!--Lo que está encerrado en dos llaves es INTERPOLATION-->
+        <td>
+            <a [routerLink]="['/recipes-detail', i.id]">View details (from tag a) </a>
+            <button (click)="viewDetails(i.id)">View details (from function)</button>
+            <a [routerLink]="['/recipes-detail-v2']" 
+            [queryParams]="{'name':'chicken'}">View details (query params) </a> 
+            <!--Query params es para pasar parámetros adicionales en la URL -->
+            <!--http://localhost:4200/recipes-detail-v2?name=davids--> 
+            <!--EJEMPLO: VER LINEA DE ARRIBA-->
+        </td>
+    </tr>
+
+    } @empty {
+        <p>No se encontraron datos</p>
+    }
+</table>
