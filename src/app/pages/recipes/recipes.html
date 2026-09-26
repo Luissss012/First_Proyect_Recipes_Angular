@@ -1,1 +1,49 @@
-<p>recipes works!</p>
+<div class="main-recipe">
+
+  @for (item of recipesList.recipes; track item.id) {
+
+    <div class="container">
+
+      <img [src]="item.image" [alt]="item.name" class="recipe-img" />
+
+      <h3>{{ item.id }} - {{ item.name }}</h3>
+
+      <div class="chips-list">
+        @for (tag of item.tags; track tag) {
+          <span class="chip">{{ tag }}</span>
+        }
+      </div>
+
+      <div class="columns-container">
+
+        <div class="col">
+          <h4>Ingredientes:</h4>
+
+          <ul>
+            @for (ing of item.ingredients; track ing) {
+              <li>{{ ing }}</li>
+            }
+          </ul>
+        </div>
+
+        <div class="col">
+          <h4>Instrucciones:</h4>
+
+          <ol>
+            @for (inst of item.instructions; track inst) {
+              <li>{{ inst }}</li>
+            }
+          </ol>
+        </div>
+
+      </div>
+
+    </div>
+
+  } @empty {
+
+    <p>Sin recetas disponibles</p>
+
+  }
+
+</div>

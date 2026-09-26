@@ -10,8 +10,6 @@ import { Component } from '@angular/core';
 
 export class Contact {
 
-  name = 'Luis';
-  textButton = 'Enviar';
 
   data = [
     {
