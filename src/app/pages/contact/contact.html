@@ -1,1 +1,49 @@
-<p>contact works!</p>
+<h1>Listado de clientes</h1>
+
+@for (i of data; track i.creditId) {
+
+  <article class="container">
+
+    <div class="item">
+      <h1>PERFIL</h1>
+
+      <h3>
+        {{ i.firstName }}
+        {{ i.secondName }}
+        {{ i.surname }}
+        {{ i.secondLastName }}
+      </h3>
+
+      <p>
+        Fecha de nacimiento: {{ i.birthdate }}
+        ({{ calculateAge(i.birthdate) }} años)
+      </p>
+
+      <p>{{ i.email }}</p>
+    </div>
+
+    <div class="item">
+      <h1>H. CRÉDITO</h1>
+
+      @for (item of i.creditHistory; track item.pastCreditId) {
+
+        <p>ID: {{ item.pastCreditId }}</p>
+        <p>Monto: Q{{ item.amount }}</p>
+        <p>Estado: {{ item.status }}</p>
+        <p>Comportamiento: {{ item.behavior }}</p>
+
+      } @empty {
+
+        <p>No hay datos de créditos</p>
+
+      }
+
+    </div>
+
+  </article>
+
+} @empty {
+
+  <p>Sin información</p>
+
+}
