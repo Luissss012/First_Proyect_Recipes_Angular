@@ -1,102 +1,51 @@
 <section>
-
-  <h3>Selección de Filtros - Local</h3>
+  <h3>Selección de filtros</h3>
 
   <label>
     Por nombre
-    <input
-      type="radio"
-      value="NAME"
-      [(ngModel)]="filterType">
+    <input type="radio" value="NAME" [(ngModel)]="filterType">
   </label>
 
   <label>
     Por nivel de dificultad
-    <input
-      type="radio"
-      value="DIFFICULTY"
-      [(ngModel)]="filterType">
+    <input type="radio" value="DIFFICULTY" [(ngModel)]="filterType">
   </label>
 
-  <p>Filtro seleccionado: {{ filterType }}</p>
-
-  @if (filterType === "NAME") {
-
+  @if (filterType === 'NAME') {
     <label>
       Nombre a buscar
-
-      <input
-        type="text"
-        placeholder="Ingrese el nombre de la receta"
-        [(ngModel)]="_name">
+      <input type="text" placeholder="Ingrese el nombre de la receta" [(ngModel)]="_name">
     </label>
-
-    <p>
-      Valor actual del input de búsqueda de nombre es:
-      {{ _name }}
-    </p>
   }
 
-  @if (filterType === "DIFFICULTY") {
-
+  @if (filterType === 'DIFFICULTY') {
     <label>
       Opciones de dificultad
-
       <select [(ngModel)]="_difficulty">
         <option value="">Seleccione una opción</option>
-        <option value="easy">Easy</option>
-        <option value="medium">Medium</option>
+        <option value="Easy">Fácil</option>
+        <option value="Medium">Medio</option>
       </select>
     </label>
-
-    <p>
-      Dificultad seleccionada:
-      {{ _difficulty }}
-    </p>
   }
 
-  <button (click)="filterRecipes()">
-    Filtrar
-  </button>
-
+  <div class="filter-actions">
+    <button type="button" (click)="filterRecipesList()" [disabled]="!canFilter">Filtro local</button>
+    <button type="button" (click)="filterRecipesListExternal()" [disabled]="!canFilter">Filtro externo</button>
+  </div>
 </section>
 
-
 <table>
-
-  <tr>
-    <th>ID</th>
-    <th>NAME</th>
-    <th>DIFFICULTY</th>
-    <th>ACTIONS</th>
-  </tr>
-
-  @for (i of _recipesListFilter; track i.id) {
-
+  <tr><th>#</th><th>ID</th><th>NAME</th><th>DIFFICULTY</th><th>ACTIONS</th></tr>
+  @for (i of _recipesListFilter; track i.id; let index = $index) {
     <tr>
-
-      <td>{{ i.id }}</td>
-
-      <td>{{ i.name }}</td>
-
-      <td>{{ i.difficulty }}</td>
-
+      <td>{{ index + 1 }}</td><td>{{ i.id }}</td><td>{{ i.name }}</td><td>{{ i.difficulty }}</td>
       <td>
-        <a [routerLink]="['/recipes-detail', i.id]">
-          View details
-        </a>
+        <a [routerLink]="['/recipes-detail', i.id]">View details</a>
+        <button type="button" (click)="viewDetails(i.id)">View details (button)</button>
       </td>
-
     </tr>
-
   } @empty {
-
-    <tr>
-      <td colspan="4">
-        No se encontraron datos
-      </td>
-    </tr>
-
+    <tr><td colspan="5">No se encontraron datos</td></tr>
   }
-
 </table>
