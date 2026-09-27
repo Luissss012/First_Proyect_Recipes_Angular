@@ -1,0 +1,28 @@
+<h1>Listado de Usuarios</h1>
+
+<div class="users-container">
+  @for (user of users; track user.id) {
+    <article class="user-card">
+      <div class="user-header">
+        <h2>{{ user.id }} - {{ user.firstName }} {{ user.lastName }}</h2>
+        <p><strong>Username:</strong> {{ user.username }}</p>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+      </div>
+
+      <div class="posts-container">
+        <h3>Publicaciones</h3>
+
+        @for (post of getPostsByUser(user.id); track post.id) {
+          <div class="post-card">
+            <h4>{{ post.id }} - {{ post.title }}</h4>
+            <p>{{ post.body }}</p>
+          </div>
+        } @empty {
+          <p>Este usuario no tiene publicaciones.</p>
+        }
+      </div>
+    </article>
+  } @empty {
+    <p>No hay usuarios disponibles.</p>
+  }
+</div>
